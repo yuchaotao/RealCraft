@@ -11,6 +11,12 @@
 	3	password	char(32)	latin1_swedish_ci		否	无		
 
 	4	email	varchar(50)	latin1_swedish_ci		否	无
+
+ 	5 	wood
+
+ 	6 	stone
+
+	7 	food
 	
 表名 construction
 
@@ -22,3 +28,21 @@
  
  3 location #e.g ['x':12, 'y':12]
  
+ 4 value
+
+ 5 workforce
+
+ 表名 resourceLocation
+ //incomplete
+
+ 1 id 
+
+ 2 location
+
+ 3 wood
+
+ 4 stone
+
+ 5 food
+ 
+ 6 workforce
