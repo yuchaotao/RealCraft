@@ -35,7 +35,8 @@ class Account extends CI_Controller{
  
         $this->_username = $this->input->post('username');                //用户名
         if ($this->form_validation->run() == FALSE){
-            $this->load->view('account/login');
+            // $this->load->view('account/login');
+            echo FALSE;
         }
         else {
             //注册session,设定登录状态
@@ -45,7 +46,8 @@ class Account extends CI_Controller{
                                  .anchor('account/dashboard', 'Dashboard');
             $data['id'] = $user_tmp->id;
             $data['username'] = $_username;
-            $this->load->view('account/note', $data);
+            // $this->load->view('account/note', $data);
+            echo TRUE;
         }
     }
  
@@ -93,8 +95,13 @@ class Account extends CI_Controller{
              array(
                  'field'=>'password',
                  'label'=>'密码',
-                 'rules'=>'trim|required|min_length[4]|max_length[12]|xss_clean'
+                 'rules'=>'trim|required|min_length[4]|max_length[12]|xss_clean|matches[passconf]'
              ),
+             array(
+                    'field'=>'passconf',
+                    'label'=>'密码确认',
+                    'rules'=>'trim|required|min_length[4]|max_length[12]|xss_clean'
+                ),
              array(
                  'field'=>'email',
                  'label'=>'邮箱账号',
@@ -105,12 +112,14 @@ class Account extends CI_Controller{
         
         if ($this->form_validation->run() == FALSE)
         {
-            $this->load->view('account/register');
+            // $this->load->view('account/register');
+            echo FALSE;
         }
         else 
         {
             $username = $this->input->post('username');
             $password = md5($this->input->post('password'));
+            $passconf = md5($this->input->post('passconf'));
             $email = $this->input->post('email');
             if ($this->maccount->add_user($username, $password, $email))
             {
@@ -119,7 +128,8 @@ class Account extends CI_Controller{
                 $user_tmp = $this->maccount->get_by_username($username);
                 $data['id'] = $user_tmp->id;
                 $data['username'] = $username;
-                $this->load->view('account/note', $data);
+                // $this->load->view('account/note', $data);
+                echo TRUE;
             }
             else 
             {
@@ -172,4 +182,6 @@ class Account extends CI_Controller{
             $this->load->view('account/details');
         }
     }
+
+    
 }
