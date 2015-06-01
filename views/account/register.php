@@ -11,10 +11,6 @@
 			<td><input type="password" name="password"></td>
 		</tr>
 		<tr>
-			<td>密码确认</td>
-			<td><input type="password" name="passconf"></td>
-		</tr>
-		<tr>
 			<td>邮箱</td>
 			<td><input type="email" name="email"></td>
 		</tr>

@@ -93,13 +93,8 @@ class Account extends CI_Controller{
              array(
                  'field'=>'password',
                  'label'=>'密码',
-                 'rules'=>'trim|required|min_length[4]|max_length[12]|xss_clean|matches[passconf]'
+                 'rules'=>'trim|required|min_length[4]|max_length[12]|xss_clean'
              ),
-             array(
-                    'field'=>'passconf',
-                    'label'=>'密码确认',
-                    'rules'=>'trim|required|min_length[4]|max_length[12]|xss_clean'
-                ),
              array(
                  'field'=>'email',
                  'label'=>'邮箱账号',
@@ -116,7 +111,6 @@ class Account extends CI_Controller{
         {
             $username = $this->input->post('username');
             $password = md5($this->input->post('password'));
-            $passconf = md5($this->input->post('passconf'));
             $email = $this->input->post('email');
             if ($this->maccount->add_user($username, $password, $email))
             {
