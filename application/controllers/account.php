@@ -35,8 +35,8 @@ class Account extends CI_Controller{
  
         $this->_username = $this->input->post('username');                //用户名
         if ($this->form_validation->run() == FALSE){
-            // $this->load->view('account/login');
-            echo FALSE;
+             $this->load->view('account/login');
+            //echo FALSE;
         }
         else {
             //注册session,设定登录状态
@@ -46,8 +46,8 @@ class Account extends CI_Controller{
                                  .anchor('account/dashboard', 'Dashboard');
             $data['id'] = $user_tmp->id;
             $data['username'] = $_username;
-            // $this->load->view('account/note', $data);
-            echo TRUE;
+             $this->load->view('account/note', $data);
+            //echo TRUE;
         }
     }
  
@@ -112,8 +112,8 @@ class Account extends CI_Controller{
         
         if ($this->form_validation->run() == FALSE)
         {
-            // $this->load->view('account/register');
-            echo FALSE;
+             $this->load->view('account/register');
+            //echo FALSE;
         }
         else 
         {
@@ -128,8 +128,8 @@ class Account extends CI_Controller{
                 $user_tmp = $this->maccount->get_by_username($username);
                 $data['id'] = $user_tmp->id;
                 $data['username'] = $username;
-                // $this->load->view('account/note', $data);
-                echo TRUE;
+                 $this->load->view('account/note', $data);
+                //echo TRUE;
             }
             else 
             {
