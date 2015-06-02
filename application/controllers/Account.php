@@ -174,11 +174,13 @@ class Account extends CI_Controller{
     {
         if ($this->MAccount->logout() == TRUE)
         {
-            $this->load->view('account/logout');
+            //$this->load->view('account/logout');
+            echo 1;
         }
         else
         {
-            $this->load->view('account/details');
+            //$this->load->view('account/details');
+            echo 0;
         }
     }
 
