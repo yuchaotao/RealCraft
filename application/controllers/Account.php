@@ -15,7 +15,7 @@ class Account extends CI_Controller{
     //login 
     //**********************************************************************************************************
     function index(){
-        $this->load->view('account/register');
+        $this->load->view('account/login');
     }
 
     function login(){
@@ -41,11 +41,11 @@ class Account extends CI_Controller{
         else {
             //注册session,设定登录状态
             $this->Maccount->login($this->_username);
-            $user_tmp = $this->Maccount->get_by_username($_username);
+            $user_tmp = $this->Maccount->get_by_username($this->_username);
             $data['message'] = $this->session->userdata('username').' You are logged in! Now take a look at the '
                                  .anchor('account/dashboard', 'Dashboard');
             $data['id'] = $user_tmp->id;
-            $data['username'] = $_username;
+            $data['username'] = $this->_username;
             // $this->load->view('account/note', $data);
             echo TRUE;
         }
@@ -71,8 +71,7 @@ class Account extends CI_Controller{
     */
     function password_check($password)
     {
-        $password = md5($this->salt.$password);
-        if ($this->Maccount->password_check($this->_username, $password)){
+        if ($this->Maccount->password_check($this->_username, md5($password))){
             return TRUE;
         }
         else {
