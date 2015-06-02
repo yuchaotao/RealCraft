@@ -70,7 +70,7 @@ class Maccount extends CI_Model{
 
     function logout()
     {
-        if ($this->logged_in() === TRUE)
+        if ($this->session->userdata('logged_in') == TRUE)
         {
            	$this->session->sess_destroy();                //销毁所有session的数据
             return TRUE;

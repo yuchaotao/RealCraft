@@ -172,7 +172,7 @@ class Account extends CI_Controller{
 
     function logout()
     {
-        if ($this->MAccount->logout() == TRUE)
+        if ($this->Maccount->logout() == TRUE)
         {
             //$this->load->view('account/logout');
             echo 1;
