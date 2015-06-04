@@ -5,8 +5,14 @@ class Distance extends CI_Model{
 	//calculate the distance between player and the target location
 	// @param array[2] $playerLocation
 	// @param array[2] $targetLocation
-	function calculateDistance($playerLocation, $targetLocation){
-		return sqrt(($playerLocation->x - $targetLocation->x)^2 + ($playerLocation->y - $targetLocation->y)^2);
+	function calculateDistance($playerLocation, $targetLocation) {
+		list($target_x_str, $target_y_str) = explode(',', $targetLocation);
+        list($self_x_str, $self_y_str) = explode(',', $playerLocation);
+        $target_x = floatval($target_x_str);
+        $target_y = floatval($target_y_str);
+        $self_x = floatval($self_x_str);
+        $self_y = floatval($self_y_str);
+		return sqrt(($self_x - $target_x)^2 + ($self_y - $target_y)^2);
 	}
 	//judge whether the location is touchable
 	//@param int $dis
