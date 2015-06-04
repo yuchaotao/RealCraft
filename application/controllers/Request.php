@@ -18,7 +18,11 @@ class Request extends CI_Controller {
     	$resourceBase = $this->db->get('resourcebase');
     	$construction = $this->db->get('construction');
     	echo "playerInfo: ", json_encode($player), '<br>';
-    	echo "resourceBase: ", json_encode($resourceBase), '<br>';
-    	echo "construction: ", json_encode($construction), '<br>';
+    	foreach($resourceBase->result() as $row) {
+    		echo "resourceBase: ", json_encode($row), '<br>';
+    	}
+    	foreach($construction->result() as $row) {
+    		echo "construction: ", json_encode($row), '<br>';
+    	}
     }
 }
