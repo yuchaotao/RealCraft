@@ -8,8 +8,8 @@
 			<td><input type="text" name="selflocation"></td>
 		</tr>
 		<tr>
-			<td>目标位置</td>
-			<td><input type="text" name="targetlocation"></td>
+			<td>目标ID</td>
+			<td><input type="text" name="targetId"></td>
 		</tr>
 		<tr>
 			<td><input type="submit" name="submit" value="collect.."></td>
