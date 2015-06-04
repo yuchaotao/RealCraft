@@ -43,7 +43,7 @@ class Operation extends CI_Controller {
         	return;
         }
         //echo "Your id is: ", $playerId, "<br>";
-        $targetLocation = $this->input->post('targetId');
+        $targetId = $this->input->post('targetId');
         $selfLocation = $this->input->post('selflocation');
         $locationInfo = $this->db->get_where('construction', array('id' => $targetId))->row();
         if($this->distance->calculateDistance($selfLocation, $locationInfo->location) < self::vision) {
@@ -55,14 +55,16 @@ class Operation extends CI_Controller {
                $player->wood -= 2 * $workforce;
                $player->stone -= $workforce;
                $this->db->update('userproperty', $player, array('playerId' => $playerId));
-               echo $state;
+               echo $state; // durability
             }
             else {
-                echo -3, ";You don't have enough resources...";
+                echo -3;
+                // You don't have enough resources...
             }
         }
         else {
-        	echo -2, ";The target is too far to touch!";
+        	echo -2;
+            // The target is too far to touch!
         }
     }
 
@@ -90,10 +92,11 @@ class Operation extends CI_Controller {
         if($this->distance->calculateDistance($selfLocation, $locationInfo->location) < self::vision) {
         	$attackDamage = 1;
         	$state = $this->construction->attack($playerId, $targetId, $attackDamage);
-        	echo $state;
+        	echo $state; // durability
         }
         else {
-        	echo "The target is too far to touch!";
+        	echo -2;
+            // The target is too far to touch!
         }
     }
 
@@ -126,35 +129,42 @@ class Operation extends CI_Controller {
         	switch($type) {
         		case 1:
         			$player->wood += $workforce;
+                    echo 1;
         			break;
         		case 2:
         			$player->stone += $workforce;
+                    echo 1;
         			break;
         		case 3:
         			$player->stone += $workforce;
         			$player->wood += $workforce;
+                    echo 1;
         			break;
         		case 4:
         			$player->food += $workforce;
+                    echo 1;
         			break;
         		case 5:
         			$player->wood += $workforce;
         			$player->food += $workforce;
+                    echo 1;
         			break;
         		case 6:
         			$player->stone += $workforce;
         			$player->food += $workforce;
+                    echo 1;
         			break;
         		case 7:
         			$player->stone += $workforce;
         			$player->wood += $workforce;
         			$player->food += $workforce;
+                    echo 1;
         			break;
         		case -1:
-        			echo "Wrong target location!";
+        			echo -2;
         			break;
         		case 0:
-        			echo "The source base is empty!";
+        			echo 0;
         			break;
         	}
         	$this->db->update('userproperty', $player, array('playerId' => $playerId));
