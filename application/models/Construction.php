@@ -28,7 +28,7 @@ class Construction extends CI_Model{
 			$this->db->update('construction', $newConstruction);
 		}
 		
-		return double($newConstruction->value) / self::constructionMaxDurability;
+		return $newConstruction->value / self::constructionMaxDurability;
 	}
 
 	function attack($playerId, $targetId, $attackDamage) {
@@ -37,6 +37,6 @@ class Construction extends CI_Model{
 		$query->row()->value = $query->row()->value - $attackDamage;
 		if($query->row()->value <= 0) $query->row()->value = 0;
 		$this->db->update('construction', $query->row(), array('id' => $targetId));
-		return double($query->row()->value) / self::constructionMaxDurability;
+		return $query->row()->value / self::constructionMaxDurability;
 	}
 }
