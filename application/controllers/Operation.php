@@ -55,7 +55,7 @@ class Operation extends CI_Controller {
                $player->wood -= 2 * $workforce;
                $player->stone -= $workforce;
                $this->db->update('userproperty', $player, array('playerId' => $playerId));
-               echo $state; // 耐久度百分比
+               echo $state; // durability
             }
             else {
                 echo -3;
@@ -92,7 +92,7 @@ class Operation extends CI_Controller {
         if($this->distance->calculateDistance($selfLocation, $locationInfo->location) < self::vision) {
         	$attackDamage = 1;
         	$state = $this->construction->attack($playerId, $targetId, $attackDamage);
-        	echo $state; // 耐久度剩余百分比
+        	echo $state; // durability
         }
         else {
         	echo -2;
@@ -129,29 +129,36 @@ class Operation extends CI_Controller {
         	switch($type) {
         		case 1:
         			$player->wood += $workforce;
+                    echo 1;
         			break;
         		case 2:
         			$player->stone += $workforce;
+                    echo 1;
         			break;
         		case 3:
         			$player->stone += $workforce;
         			$player->wood += $workforce;
+                    echo 1;
         			break;
         		case 4:
         			$player->food += $workforce;
+                    echo 1;
         			break;
         		case 5:
         			$player->wood += $workforce;
         			$player->food += $workforce;
+                    echo 1;
         			break;
         		case 6:
         			$player->stone += $workforce;
         			$player->food += $workforce;
+                    echo 1;
         			break;
         		case 7:
         			$player->stone += $workforce;
         			$player->wood += $workforce;
         			$player->food += $workforce;
+                    echo 1;
         			break;
         		case -1:
         			echo -2;

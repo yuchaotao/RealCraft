@@ -3,7 +3,6 @@
 //this model is dealing with construction operations, e.g build, attack...
 
 class Construction extends CI_Model{
-	const constructionMaxDurability = 10; // up limit of the durability
 	//pre isFree($targetLocation)
 	//pre isAble($dis, $vision)
 	function build($playerId, $targetId, $workForce){
@@ -22,13 +21,13 @@ class Construction extends CI_Model{
 		if($workForce)
 		{
 			$newConstruction->value += $workForce;
-			if($newConstruction->value > self::constructionMaxDurability)
-				$newConstruction->value = self::constructionMaxDurability;
+			if($newConstruction->value > $newConstruction->maxdurability)
+				$newConstruction->value = $newConstruction->maxdurability;
 			$this->db->where('id', $targetId);
 			$this->db->update('construction', $newConstruction);
 		}
 		
-		return $newConstruction->value / self::constructionMaxDurability * 100;
+		return $newConstruction->value;
 	}
 
 	function attack($playerId, $targetId, $attackDamage) {
@@ -37,6 +36,6 @@ class Construction extends CI_Model{
 		$query->row()->value = $query->row()->value - $attackDamage;
 		if($query->row()->value <= 0) $query->row()->value = 0;
 		$this->db->update('construction', $query->row(), array('id' => $targetId));
-		return $query->row()->value / self::constructionMaxDurability * 100;
+		return $query->row()->value;
 	}
 }
