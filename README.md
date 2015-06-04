@@ -20,8 +20,6 @@
 	
 表名 construction
 
-//incomplete
-
  1 id #主键
  
  2 playerId #与user中的id对应
@@ -30,10 +28,10 @@
  
  4 value
 
- 5 workforce
-
- 表名 resourceLocation
- //incomplete
+//将workforce从数据库删除了，突然发现并没有什么作用
+ 
+ 表名 resourcebase //改名了, 同样删除了workforce
+ 
 
  1 id 
 
@@ -44,5 +42,20 @@
  4 stone
 
  5 food
- 
- 6 workforce
+
+
+新加表
+
+表名 userproperty 
+
+1 id
+
+2 playerId
+
+3 wood
+
+4 stone
+
+5 food
+
+6 workforce

@@ -50,6 +50,9 @@ class Maccount extends CI_Model{
     {
         $data = array('username'=>$username, 'password'=>$password, 'email'=>$email);
         $this->db->insert('user', $data);
+        $query = $this->db->get_where('user', array('username'=>$username));
+        $resource['playerId'] = $query->row()->id;
+        $this->db->insert('userproperty', $resource);
         if ($this->db->affected_rows() > 0)
         {
             $this->login($username);

@@ -8,14 +8,14 @@ class Account extends CI_Controller{
         $this->load->library('form_validation');
         $this->load->helper(array('form', 'url'));
         $this->load->helper('security');
-        $this->load->model('Maccount');
+        $this->load->model('maccount');
         $this->load->library('session');
     }
     
     //login 
     //**********************************************************************************************************
     function index(){
-        $this->load->view('account/login');
+        $this->load->view('account/register');
     }
 
     function login(){
@@ -34,20 +34,21 @@ class Account extends CI_Controller{
         $this->form_validation->set_rules($config);
  
         $this->_username = $this->input->post('username');                //用户名
+
         if ($this->form_validation->run() == FALSE){
-            // $this->load->view('account/login');
-            echo FALSE;
+             $this->load->view('account/login');
+            //echo FALSE;
         }
         else {
             //注册session,设定登录状态
-            $this->Maccount->login($this->_username);
-            $user_tmp = $this->Maccount->get_by_username($this->_username);
+            $this->maccount->login($this->_username);
+            $user_tmp = $this->maccount->get_by_username($this->_username);
             $data['message'] = $this->session->userdata('username').' You are logged in! Now take a look at the '
                                  .anchor('account/dashboard', 'Dashboard');
             $data['id'] = $user_tmp->id;
             $data['username'] = $this->_username;
-            // $this->load->view('account/note', $data);
-            echo TRUE;
+            $this->load->view('account/note', $data);
+            //echo TRUE;
         }
     }
  
@@ -58,7 +59,7 @@ class Account extends CI_Controller{
     * @return bool 
     */
     function username_check($username){
-        if ($this->Maccount->get_by_username($username)){
+        if ($this->maccount->get_by_username($username)){
             return TRUE;
         }
         else {
@@ -71,7 +72,7 @@ class Account extends CI_Controller{
     */
     function password_check($password)
     {
-        if ($this->Maccount->password_check($this->_username, md5($password))){
+        if ($this->maccount->password_check($this->_username, md5($password))){
             return TRUE;
         }
         else {
@@ -111,8 +112,8 @@ class Account extends CI_Controller{
         
         if ($this->form_validation->run() == FALSE)
         {
-            // $this->load->view('account/register');
-            echo FALSE;
+            $this->load->view('account/register');
+            //echo FALSE;
         }
         else 
         {
@@ -120,15 +121,15 @@ class Account extends CI_Controller{
             $password = md5($this->input->post('password'));
             $passconf = md5($this->input->post('passconf'));
             $email = $this->input->post('email');
-            if ($this->Maccount->add_user($username, $password, $email))
+            if ($this->maccount->add_user($username, $password, $email))
             {
                 $data['message'] = "The user account has now been created! You can go "
                             .anchor('account/index', 'here').'.';
-                $user_tmp = $this->Maccount->get_by_username($username);
+                $user_tmp = $this->maccount->get_by_username($username);
                 $data['id'] = $user_tmp->id;
                 $data['username'] = $username;
-                // $this->load->view('account/note', $data);
-                echo TRUE;
+                $this->load->view('account/note', $data);
+                //echo TRUE;
             }
             else 
             {
@@ -153,7 +154,7 @@ class Account extends CI_Controller{
     */
     function username_exists($username)
     {
-        if ($this->Maccount->get_by_username($username))
+        if ($this->maccount->get_by_username($username))
         {
             $this->form_validation->set_message('username_exists', '用户名已被占用');
             return FALSE;
@@ -162,7 +163,7 @@ class Account extends CI_Controller{
     }
     function email_exists($email)
     {
-        if ($this->Maccount->email_exists($email))
+        if ($this->maccount->email_exists($email))
         {
             $this->form_validation->set_message('email_exists', '邮箱已被占用');
             return FALSE;
@@ -172,7 +173,7 @@ class Account extends CI_Controller{
 
     function logout()
     {
-        if ($this->Maccount->logout() == TRUE)
+        if ($this->maccount->logout() == TRUE)
         {
             //$this->load->view('account/logout');
             echo 1;
