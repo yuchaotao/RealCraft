@@ -41,10 +41,20 @@ class Operation extends CI_Controller {
         $selfLocation = $this->input->post('selflocation');
         if($this->distance->calculateDistance($selfLocation, $targetLocation) < self::vision) {
         	$workforce = 1;
-        	$this->construction->build($playerId, $targetLocation, $workforce);
+            $query = $this->db->get_where('userproperty', array('playerId' => $playerId));
+            $player = $query->row();
+            if($player->wood >= 2 * $workforce && $player->stone >= 1 * $workforce) {
+        	   $state = $this->construction->build($playerId, $targetLocation, $workforce);
+               $player->wood -= 2 * $workforce;
+               $player->stone -= $workforce;
+               echo $state;
+            }
+            else {
+                echo -3, "You don't have enough resources...";
+            }
         }
         else {
-        	echo "The target is too far to touch!";
+        	echo -2, "The target is too far to touch!";
         }
     }
 
