@@ -43,7 +43,7 @@ class Operation extends CI_Controller {
         	return;
         }
         //echo "Your id is: ", $playerId, "<br>";
-        $targetLocation = $this->input->post('targetId');
+        $targetId = $this->input->post('targetId');
         $selfLocation = $this->input->post('selflocation');
         $locationInfo = $this->db->get_where('construction', array('id' => $targetId))->row();
         if($this->distance->calculateDistance($selfLocation, $locationInfo->location) < self::vision) {

@@ -10,6 +10,7 @@ class Construction extends CI_Model{
 		$query = $this->db->get_where('construction', array('id' => $targetId));
 		// echo "<br>your building is in process.";
 		if($query->row()->playerId == NULL) {
+			echo "You have owned this place...";
 			$query->row()->playerId = $playerId;
 		}
 		else if($playerId != $query->row()->playerId){
