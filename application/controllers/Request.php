@@ -15,10 +15,10 @@ class Request extends CI_Controller {
     		return;
     	}
     	$player = $this->db->get_where('userproperty', array('playerId' => $playerId))->row();
-    	$resourceBase = $this->db->get_where('resourcebase')->row();
-    	$construction = $this->db->get_where('construction')->row();
-    	echo "playerInfo: ", json_encode($player);
-    	echo "resourceBase: ", json_encode($resourceBase);
-    	echo "construction: ", json_encode($construction);
+    	$resourceBase = $this->db->get('resourcebase');
+    	$construction = $this->db->get('construction');
+    	echo "playerInfo: ", json_encode($player), '<br>';
+    	echo "resourceBase: ", json_encode($resourceBase), '<br>';
+    	echo "construction: ", json_encode($construction), '<br>';
     }
 }
