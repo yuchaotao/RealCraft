@@ -15,8 +15,8 @@ class Request extends CI_Controller {
     		return;
     	}
     	$player = $this->db->get_where('userproperty', array('playerId' => $playerId))->row();
-    	$resourceBase = $this->db->get_where('resourcebase');
-    	$counstruction = $this->db->get_where('construction');
+    	$resourceBase = $this->db->get_where('resourcebase')->row();
+    	$construction = $this->db->get_where('construction')->row();
     	echo "playerInfo: ", json_encode($player);
     	echo "resourceBase: ", json_encode($resourceBase);
     	echo "construction: ", json_encode($construction);
