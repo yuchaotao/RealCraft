@@ -47,6 +47,7 @@ class Operation extends CI_Controller {
         	   $state = $this->construction->build($playerId, $targetLocation, $workforce);
                $player->wood -= 2 * $workforce;
                $player->stone -= $workforce;
+               $this->db->update('userproperty', $player, array('playerId' => $playerId));
                echo $state;
             }
             else {
