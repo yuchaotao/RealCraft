@@ -39,7 +39,7 @@ class Construction extends CI_Model{
 		if($query->num_rows() != 1) return -1;
 		if($query->row()->value <= 0) return 1;
 		$query->row()->value = $query->row()->value - $attackDamage;
-		if($newValue <= 0) $newValue = 0;
+		if($$query->row()->value <= 0) $query->row()->value = 0;
 		$this->db->update('construction', $query->row(), array('id' => $targetId));
 		return 0;
 	}
