@@ -8,7 +8,8 @@ class Maccount extends CI_Model{
 	*/
 	function login($username)
 	{
-		$data = array('username'=>$username, 'logged_in'=>TRUE);
+		$playerId = $this->get_by_username($username)->id;
+		$data = array('username'=>$username, 'logged_in'=>TRUE, 'playerId'=>$playerId);
 		$this->session->set_userdata($data);                    //添加session数据
 	}
 	/**
