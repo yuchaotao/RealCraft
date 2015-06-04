@@ -55,14 +55,16 @@ class Operation extends CI_Controller {
                $player->wood -= 2 * $workforce;
                $player->stone -= $workforce;
                $this->db->update('userproperty', $player, array('playerId' => $playerId));
-               echo $state;
+               echo $state; // 耐久度百分比
             }
             else {
-                echo -3, ";You don't have enough resources...";
+                echo -3;
+                // You don't have enough resources...
             }
         }
         else {
-        	echo -2, ";The target is too far to touch!";
+        	echo -2;
+            // The target is too far to touch!
         }
     }
 
@@ -90,10 +92,11 @@ class Operation extends CI_Controller {
         if($this->distance->calculateDistance($selfLocation, $locationInfo->location) < self::vision) {
         	$attackDamage = 1;
         	$state = $this->construction->attack($playerId, $targetId, $attackDamage);
-        	echo $state;
+        	echo $state; // 耐久度剩余百分比
         }
         else {
-        	echo "The target is too far to touch!";
+        	echo -2;
+            // The target is too far to touch!
         }
     }
 
@@ -151,10 +154,10 @@ class Operation extends CI_Controller {
         			$player->food += $workforce;
         			break;
         		case -1:
-        			echo "Wrong target location!";
+        			echo -2;
         			break;
         		case 0:
-        			echo "The source base is empty!";
+        			echo 0;
         			break;
         	}
         	$this->db->update('userproperty', $player, array('playerId' => $playerId));

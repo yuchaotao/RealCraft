@@ -17,30 +17,26 @@ class Construction extends CI_Model{
 				return -1;
 		}
 		// echo "<br>ID matched.<br>";
-		$newContruction = $query->row();
-		// echo $newContruction->location, ' ', $newContruction->value, '<br>';
+		$newConstruction = $query->row();
+		// echo $newConstruction->location, ' ', $newConstruction->value, '<br>';
 		if($workForce)
 		{
-			$newContruction->value += $workForce;
-			if($newContruction->value > self::constructionMaxDurability)
-				$newContruction->value = self::constructionMaxDurability;
+			$newConstruction->value += $workForce;
+			if($newConstruction->value > self::constructionMaxDurability)
+				$newConstruction->value = self::constructionMaxDurability;
 			$this->db->where('id', $targetId);
-			$this->db->update('construction', $newContruction);
+			$this->db->update('construction', $newConstruction);
 		}
-		if($newContruction->value == self::constructionMaxDurability) {// Building finished.
-			// echo "Construction complete..";
-			return 1;
-		}
-		return 0;
+		
+		return double($newConstruction->value) / self::constructionMaxDurability;
 	}
 
 	function attack($playerId, $targetId, $attackDamage) {
 		$query = $this->db->get_where('construction', array('id' => $targetId));
 		if($query->num_rows() != 1) return -1;
-		if($query->row()->value <= 0) return 1;
 		$query->row()->value = $query->row()->value - $attackDamage;
 		if($query->row()->value <= 0) $query->row()->value = 0;
 		$this->db->update('construction', $query->row(), array('id' => $targetId));
-		return 0;
+		return double($query->row()->value) / self::constructionMaxDurability;
 	}
 }
