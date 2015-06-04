@@ -35,7 +35,7 @@ class Construction extends CI_Model{
 	}
 
 	function attack($playerId, $targetId, $attackDamage) {
-		$query = $this->db->where('construction', array('id' => $targetId));
+		$query = $this->db->get_where('construction', array('id' => $targetId));
 		if($query->num_rows() != 1) return -1;
 		if($query->row()->value <= 0) return 1;
 		$query->row()->value = $query->row()->value - $attackDamage;
