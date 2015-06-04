@@ -60,4 +60,18 @@ class Resourcebase extends CI_Model {
 		else
 			return 0;
 	}
+	function setBase($location, $wood, $stone, $food){
+		$this->db->insert('resourcebase',array("location"=>$location, "wood"=>$wood, "stone"=>$stone, "food"=>$food));
+	}	
+
+	function fresh($WOOD_RANGE, $STONE_RANGE, $FOOD_RANGE){
+		$query = $this->db->get('resourcebase');
+		foreach ($query->result_array() as $row) {
+			$this->db->where('id',$row['id']);
+			$row['wood'] = mt_rand($WOOD_RANGE['start'],$WOOD_RANGE['end']);
+            $Srow['stone'] = mt_rand($STONE_RANGE['start'],$STONE_RANGE['end']);
+            $row['food'] = mt_rand($FOOD_RANGE['start'],$FOOD_RANGE['end']);
+			$this->db->update('resourcebase',$row);
+		}
+	}
 }
