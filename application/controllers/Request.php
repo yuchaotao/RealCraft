@@ -17,12 +17,12 @@ class Request extends CI_Controller {
     	$player = $this->db->get_where('userproperty', array('playerId' => $playerId))->row();
     	$resourceBase = $this->db->get('resourcebase');
     	$construction = $this->db->get('construction');
-    	echo "playerInfo: ", json_encode($player), '<br>';
+    	echo json_encode($player), '<br>';
     	foreach($resourceBase->result() as $row) {
-    		echo "resourceBase: ", json_encode($row), '<br>';
+    		echo 1, json_encode($row), '<br>';
     	}
     	foreach($construction->result() as $row) {
-    		echo "construction: ", json_encode($row), '<br>';
+    		echo 2, json_encode($row), '<br>';
     	}
     }
 }
