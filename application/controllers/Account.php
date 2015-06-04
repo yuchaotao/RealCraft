@@ -185,12 +185,12 @@ class Account extends CI_Controller{
         }
     }
 
-    function getNum()
-    {
-        $query = $this->db->query('SELECT COUNT(*) as num FROM user');
-        $row = $query->row();
-        return $row->num;
-    }
+    // function getNum()
+    // {
+    //     $query = $this->db->query('SELECT COUNT(*) as num FROM user');
+    //     $row = $query->row();
+    //     return $row->num;
+    // }
 
     
 }
