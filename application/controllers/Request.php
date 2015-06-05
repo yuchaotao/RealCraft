@@ -16,7 +16,7 @@ class Request extends CI_Controller {
     		return;
     	}
     	$player = $this->db->get_where('userproperty', array('playerId' => $playerId))->row();
-    	$player['username'] = $username;
+    	array_push($player, 'username'=>$username);
     	echo json_encode($player);
     }
 
