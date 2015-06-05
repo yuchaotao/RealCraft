@@ -10,6 +10,8 @@ class Mproperty extends CI_Model {
 	}
 
 	function get_username($playerId) {
-		return $this->db->get_where('user', array('id'=>$playerId))->row()->username;
+		if($playerId != NULL)
+			return $this->db->get_where('user', array('id'=>$playerId))->row()->username;
+		return NULL;
 	}
 }
