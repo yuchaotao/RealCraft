@@ -36,7 +36,7 @@ class Operation extends CI_Controller {
                  	'rules'=>'required'
              	)
         );
-
+        $this->form_validation->set_rules($config);
         $playerId = $this->session->userdata('playerId');
         if($playerId == NULL) {
         	echo -1;
@@ -81,6 +81,7 @@ class Operation extends CI_Controller {
                  	'rules'=>'required'
              	)
         );
+        $this->form_validation->set_rules($config);
         $playerId = $this->session->userdata('playerId');
         if($playerId == NULL) {
         	echo -1;
@@ -113,6 +114,7 @@ class Operation extends CI_Controller {
                  	'rules'=>'required'
              	)
         );
+        $this->form_validation->set_rules($config);
         $playerId = $this->session->userdata('playerId');
         if($playerId == NULL) {
         	echo -1;
