@@ -6,8 +6,6 @@ class Mproperty extends CI_Model {
 	}
 
 	function update_property($playerId, $player) {
-		$player->wood -= 2 * $workforce;
-      	$player->stone -= $workforce;
        	$this->db->update('userproperty', $player, array('playerId' => $playerId));
 	}
 }

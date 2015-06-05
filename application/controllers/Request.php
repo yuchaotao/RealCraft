@@ -26,16 +26,16 @@ class Request extends CI_Controller {
     	}
     	$resourceBase = $this->db->get('resourcebase');
     	$construction = $this->db->get('construction');
-    	echo json_encode($resourceBase->result());
-    	echo json_encode($construction->result());
-    	// foreach($resourceBase->result() as $row) {
-    	// 	$data = array('id'=>$row->id, 'location'=>$row->location, 'type'=>1);
-    	// 	echo 1, json_encode($data), '/';
-    	// }
-    	// foreach($construction->result() as $row) {
-    	// 	$data = array('id'=>$row->id, 'location'=>$row->location, 'type'=>2);
-    	// 	echo 2, json_encode($data), '/';
-    	// }
+    	$res = '[';
+    	foreach($resourceBase->result() as $row) {
+    		$data = array('id'=>$row->id, 'location'=>$row->location, 'type'=>1);
+    		$res += json_encode($data) + ',';
+    	}
+    	foreach($construction->result() as $row) {
+    		$data = array('id'=>$row->id, 'location'=>$row->location, 'type'=>2);
+    		$res += json_encode($data) + ',';
+    	}
+    	echo $res;
     }
 
     function detail() {
