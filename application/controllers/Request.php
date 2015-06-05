@@ -10,11 +10,13 @@ class Request extends CI_Controller {
 
     function property() {
     	$playerId = $this->session->userdata('playerId');
+    	$username = $this->session->userdata('username');
     	if($playerId == NULL) {
     		echo -1;
     		return;
     	}
     	$player = $this->db->get_where('userproperty', array('playerId' => $playerId))->row();
+    	$player['username'] = $username;
     	echo json_encode($player);
     }
 
@@ -26,17 +28,16 @@ class Request extends CI_Controller {
     	}
     	$resourceBase = $this->db->get('resourcebase');
     	$construction = $this->db->get('construction');
-    	$res = '[';
+    	$res = '';
     	foreach($resourceBase->result() as $row) {
     		$data = array('id'=>$row->id, 'location'=>$row->location, 'type'=>1);
-    		$res += json_encode($data) + ',';
+    		$res .= json_encode($data).',';
     	}
     	foreach($construction->result() as $row) {
     		$data = array('id'=>$row->id, 'location'=>$row->location, 'type'=>2);
-    		$res += json_encode($data) + ',';
+    		$res .= json_encode($data).',';
     	}
-    	echo "result: <br>";
-    	echo $res;
+    	echo '['.substr($res,0,strlen($res)-1).']';
     }
 
     function detail() {
