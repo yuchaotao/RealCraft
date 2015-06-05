@@ -78,4 +78,8 @@ class Resourcebase extends CI_Model {
 	function get_by_id($targetId) {
 		return $this->db->get_where('resourcebase', array('id' => $targetId))->row();
 	}
+
+	function get_all() {
+		return $this->db->get('resourcebase');
+	}
 }

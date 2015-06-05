@@ -15,9 +15,12 @@ class Request extends CI_Controller {
     		echo -1;
     		return;
     	}
-    	$player = $this->db->get_where('userproperty', array('playerId' => $playerId))->row();
-    	array_push($player, 'username'=>$username);
-    	echo json_encode($player);
+    	$player = $this->mproperty->get_by_id($playerId);
+    	$res = array('id'=>$player->id, 'playerId'=>$player->playerId, 'wood'=>$player->wood, 
+    				'stone'=>$player->stone, 'food'=>$player->food, 'workforce'=>$player->workforce,
+    				'username'=>$username
+    			)
+    	echo json_encode($res);
     }
 
     function download() {
@@ -26,8 +29,8 @@ class Request extends CI_Controller {
     		echo -1;
     		return;
     	}
-    	$resourceBase = $this->db->get('resourcebase');
-    	$construction = $this->db->get('construction');
+    	$resourceBase = $this->resourcebase->get_all();
+    	$construction = $this->construction->get_all();
     	$res = '';
     	foreach($resourceBase->result() as $row) {
     		$data = array('id'=>$row->id, 'location'=>$row->location, 'type'=>1);
@@ -62,18 +65,17 @@ class Request extends CI_Controller {
     	$targetId = $this->input->post('targetId');
     	$targetType = $this->input->post('targetType');
     	$database = '';
-    	if($targetType == 1) $database = 'resourcebase';
-    	else if($targetType == 2) $database = 'construction';
+    	if($targetType == 1) {
+    		$detail = $this->resourcebase->get_by_id($targetId);
+    		echo json_encode($detail);
+    	}
+    	else if($targetType == 2) {
+    		$detail = $this->construction->get_by_id($targetId);
+    		echo json_encode($detail);
+    	}
     	else {
     		echo -2;
     		return;
     	}
-    	$query = $this->db->get_where($database, array('id' => $targetId));
-    	if($query->num_rows() != 1) {
-    		echo -3;
-    		return;
-    	}
-    	$detail = $query->row();
-    	echo json_encode($detail);
     }
 }
