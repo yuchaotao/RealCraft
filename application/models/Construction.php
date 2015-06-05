@@ -8,7 +8,7 @@ class Construction extends CI_Model{
 	function build($playerId, $targetId, $workForce){
 		$query = $this->db->get_where('construction', array('id' => $targetId));
 		// echo "<br>your building is in process.";
-		if($query->row()->playerId == NULL) {
+		if($query->row()->playerId == -1) {
 			echo "You have owned this place...";
 			$query->row()->playerId = $playerId;
 		}
