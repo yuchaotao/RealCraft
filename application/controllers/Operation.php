@@ -122,6 +122,7 @@ class Operation extends CI_Controller {
         }
         $targetId = $this->input->post('targetId');
         $selfLocation = $this->input->post('selflocation');
+        $locationInfo = $this->construction->get_by_id($targetId);
         if($this->distance->calculateDistance($selfLocation, $locationInfo->location) < self::vision) {
             $state = $this->construction->abandon($playerId, $targetId);
             echo $state;
