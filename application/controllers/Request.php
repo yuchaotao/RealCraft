@@ -35,6 +35,7 @@ class Request extends CI_Controller {
     		$data = array('id'=>$row->id, 'location'=>$row->location, 'type'=>2);
     		$res += json_encode($data) + ',';
     	}
+    	echo "result: <br>";
     	echo $res;
     }
 
