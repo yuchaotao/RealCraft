@@ -19,7 +19,7 @@ class Request extends CI_Controller {
     	$res = array('id'=>$player->id, 'playerId'=>$player->playerId, 'wood'=>$player->wood, 
     				'stone'=>$player->stone, 'food'=>$player->food, 'workforce'=>$player->workforce,
     				'username'=>$username
-    			)
+    			);
     	echo json_encode($res);
     }
 
