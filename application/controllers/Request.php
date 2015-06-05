@@ -74,7 +74,7 @@ class Request extends CI_Controller {
     	}
     	else if($targetType == 2) {
     		$detail = $this->construction->get_by_id($targetId);
-    		$username = $this->mpropery->get_username($detail->playerId);
+    		$username = $this->mproperty->get_username($detail->playerId);
     		$res = array(
     					'id'=>$detail->id, 'playerId'=>$detail->playerId, 'username'=>$username, 'location'=>$detail->location,
     					'value'=>$detail->value, 'maxdurability'=>$detail->maxdurability
