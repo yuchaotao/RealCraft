@@ -6,6 +6,9 @@ class Request extends CI_Controller {
         $this->load->database();
         $this->load->library('form_validation');
         $this->load->library('session');
+        $this->load->model('construction');
+        $this->load->model('resourcebase');
+        $this->load->model('mproperty');
     }
 
     function property() {
