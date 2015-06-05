@@ -1,7 +1,7 @@
 <?php
 
 class Operation extends CI_Controller {
-	const vision = 10;
+	const vision = 0.001;
 	function __construct(){
         parent::__construct();
         $this->load->database();
@@ -97,6 +97,37 @@ class Operation extends CI_Controller {
         }
         else {
         	echo -2;
+            // The target is too far to touch!
+        }
+    }
+
+    function abandon() {
+        $config = array(
+                array(
+                    'field'=>'targetId',
+                    'label'=>'目标ID',
+                    'rules'=>'required'
+                ),
+                array(
+                    'field'=>'selflocation',
+                    'label'=>'自身位置',
+                    'rules'=>'required'
+                )
+        );
+        $this->form_validation->set_rules($config);
+        $playerId = $this->session->userdata('playerId');
+        if($playerId == NULL) {
+            echo -1;
+            return;
+        }
+        $targetId = $this->input->post('targetId');
+        $selfLocation = $this->input->post('selflocation');
+        if($this->distance->calculateDistance($selfLocation, $locationInfo->location) < self::vision) {
+            $state = $this->construction->abandon($playerId, $targetId);
+            echo $state;
+        }
+        else {
+            echo -2;
             // The target is too far to touch!
         }
     }

@@ -35,9 +35,23 @@ class Construction extends CI_Model{
 		if($query->num_rows() != 1) return -1;
 		$query->row()->value = $query->row()->value - $attackDamage;
 		if($query->row()->value <= 0) $query->row()->value = 0;
-		if($query->row()->value == 0) $query->row()->playerId = NULL;
+		if($query->row()->value == 0) $query->row()->playerId = -1;
 		$this->db->update('construction', $query->row(), array('id' => $targetId));
 		return $query->row()->value;
+	}
+
+	function abandon($playerId, $targetId) {
+		$query = $this->db->get_where('construction', array('id' => $targetId));
+		if($query->num_rows() != 1) return -1;
+		if($query->row()->playerId != $playerId) return -2;// illegal operation
+		$property = $this->db->get_where('userproperty', array('playerId'=>$playerId))->row();
+		$property->wood += 2 * $query->row()->value;
+		$property->stone += $query->row()->value;
+		$query->row()->value = 0;
+		$query->row()->playerId = -1;
+		$this->db->update('userproperty', $property, array('playerId' => $playerId));
+		$this->db->update('construction', $query->row(), array('id' => $targetId));
+		return 1;
 	}
 
 	function setBase($location){
