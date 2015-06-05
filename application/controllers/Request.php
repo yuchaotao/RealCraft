@@ -19,10 +19,12 @@ class Request extends CI_Controller {
     	$construction = $this->db->get('construction');
     	echo json_encode($player), '<br>';
     	foreach($resourceBase->result() as $row) {
-    		echo 1, json_encode($row), '<br>';
+    		$data = array('id'=>$row->id, 'location'=>$row->location, 'type'=>1);
+    		echo 1, json_encode($data), '<br>';
     	}
     	foreach($construction->result() as $row) {
-    		echo 2, json_encode($row), '<br>';
+    		$data = array('id'=>$row->id, 'location'=>$row->location, 'type'=>2);
+    		echo 2, json_encode($data), '<br>';
     	}
     }
 }
