@@ -41,7 +41,7 @@ class Construction extends CI_Model{
 	}
 
 	function setBase($location){
-		$this->db->insert('construction', array('playerId'=>NULL, 'location'=>$location, 'value'=>0));
+		$this->db->insert('construction', array('playerId'=>-1, 'location'=>$location, 'value'=>0));
 	}
 
 	function get_by_id($targetId) {
