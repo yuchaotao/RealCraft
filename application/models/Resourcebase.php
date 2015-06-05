@@ -74,4 +74,8 @@ class Resourcebase extends CI_Model {
 			$this->db->update('resourcebase',$row);
 		}
 	}
+
+	function get_by_id($targetId) {
+		return $this->db->get_where('resourcebase', array('id' => $targetId))->row();
+	}
 }

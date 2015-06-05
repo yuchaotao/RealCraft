@@ -8,24 +8,34 @@ class Request extends CI_Controller {
         $this->load->library('session');
     }
 
-    function download() {
+    function property() {
     	$playerId = $this->session->userdata('playerId');
     	if($playerId == NULL) {
     		echo -1;
     		return;
     	}
     	$player = $this->db->get_where('userproperty', array('playerId' => $playerId))->row();
+    	echo json_encode($player);
+    }
+
+    function download() {
+    	$playerId = $this->session->userdata('playerId');
+    	if($playerId == NULL) {
+    		echo -1;
+    		return;
+    	}
     	$resourceBase = $this->db->get('resourcebase');
     	$construction = $this->db->get('construction');
-    	echo json_encode($player), '/';
-    	foreach($resourceBase->result() as $row) {
-    		$data = array('id'=>$row->id, 'location'=>$row->location, 'type'=>1);
-    		echo 1, json_encode($data), '/';
-    	}
-    	foreach($construction->result() as $row) {
-    		$data = array('id'=>$row->id, 'location'=>$row->location, 'type'=>2);
-    		echo 2, json_encode($data), '/';
-    	}
+    	echo json_encode($resourceBase->result());
+    	echo json_encode($construction->result());
+    	// foreach($resourceBase->result() as $row) {
+    	// 	$data = array('id'=>$row->id, 'location'=>$row->location, 'type'=>1);
+    	// 	echo 1, json_encode($data), '/';
+    	// }
+    	// foreach($construction->result() as $row) {
+    	// 	$data = array('id'=>$row->id, 'location'=>$row->location, 'type'=>2);
+    	// 	echo 2, json_encode($data), '/';
+    	// }
     }
 
     function detail() {

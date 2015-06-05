@@ -11,6 +11,7 @@ class Operation extends CI_Controller {
         $this->load->model('resourcebase');
         $this->load->library('session');
         $this->load->model('distance');
+        $this->load->model('mproperty');
     }
 
     function index() {
@@ -45,16 +46,15 @@ class Operation extends CI_Controller {
         //echo "Your id is: ", $playerId, "<br>";
         $targetId = $this->input->post('targetId');
         $selfLocation = $this->input->post('selflocation');
-        $locationInfo = $this->db->get_where('construction', array('id' => $targetId))->row();
+        $locationInfo = $this->construction->get_by_id($targetId);
         if($this->distance->calculateDistance($selfLocation, $locationInfo->location) < self::vision) {
         	$workforce = 1;
-            $query = $this->db->get_where('userproperty', array('playerId' => $playerId));
-            $player = $query->row();
+            $player = $this->mproperty->get_by_id($playerId);
             if($player->wood >= 2 * $workforce && $player->stone >= 1 * $workforce) {
         	   $state = $this->construction->build($playerId, $targetId, $workforce);
                $player->wood -= 2 * $workforce;
                $player->stone -= $workforce;
-               $this->db->update('userproperty', $player, array('playerId' => $playerId));
+               $this->mproperty->update_property($playerId, $player);
                echo $state; // durability
             }
             else {
@@ -89,7 +89,7 @@ class Operation extends CI_Controller {
         }
         $targetId = $this->input->post('targetId');
         $selfLocation = $this->input->post('selflocation');
-        $locationInfo = $this->db->get_where('construction', array('id' => $targetId))->row();
+        $locationInfo = $this->construction->get_by_id($targetId);
         if($this->distance->calculateDistance($selfLocation, $locationInfo->location) < self::vision) {
         	$attackDamage = 1;
         	$state = $this->construction->attack($playerId, $targetId, $attackDamage);
@@ -122,9 +122,8 @@ class Operation extends CI_Controller {
         }
         $targetId = $this->input->post('targetId');
         $selfLocation = $this->input->post('selflocation');
-        $locationInfo = $this->db->get_where('resourcebase', array('id' => $targetId))->row();
-        $query = $this->db->get_where('userproperty', array('playerId' => $playerId));
-        $player = $query->row();
+        $locationInfo = $this->resourcebase->get_by_id($targetId);
+        $player = $this->mproperty->get_by_id($playerId);
         if($this->distance->calculateDistance($selfLocation, $locationInfo->location) < self::vision) {
         	$workforce = 1;
         	$type = $this->resourcebase->collect($targetId, $workforce);
@@ -169,7 +168,7 @@ class Operation extends CI_Controller {
         			echo 0;
         			break;
         	}
-        	$this->db->update('userproperty', $player, array('playerId' => $playerId));
+        	$this->mproperty->update_property($playerId, $player);
         }
     }
 }
