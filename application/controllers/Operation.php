@@ -1,7 +1,7 @@
 <?php
 
 class Operation extends CI_Controller {
-	const vision = 0.001;
+	const vision = 0.01;
 	function __construct(){
         parent::__construct();
         $this->load->database();
