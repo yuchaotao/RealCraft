@@ -33,10 +33,16 @@ class Operation extends CI_CONTROLLER {
                 	'rules'=>'required'
              	),
              	array(
-                	'field'=>'selflocation',
-                 	'label'=>'自身位置',
+                	'field'=>'longitude',
+                 	'label'=>'自身位置的经度',
                  	'rules'=>'required'
-             	)
+             	),
+                array(
+                    'field'=>'latitude',
+                    'label'=>'自身位置的纬度',
+                    'rules'=>'required'
+                )
+
         );
         $this->form_validation->set_rules($config);
         $playerId = $this->session->userdata('playerId');
@@ -46,9 +52,12 @@ class Operation extends CI_CONTROLLER {
         }
         //echo "Your id is: ", $playerId, "<br>";
         $targetId = $this->input->post('targetId');
-        $selfLocation = $this->input->post('selflocation');
+        $user['longitude'] = $this->input->post('longitude');
+        $user['latitude'] = $this->input->post('latitude');
         $locationInfo = $this->construction->get_by_id($targetId);
-        if($this->distance->calculateDistance($selfLocation, $locationInfo->location) < self::vision) {
+        $target['longitude'] = $locationInfo->longitude;
+        $target['latitude'] = $location->latitude;
+        if($this->distance->calculateDistance($user, $target) < self::vision) {
         	$workforce = 1;
             $player = $this->mproperty->get_by_id($playerId);
             if($player->wood >= 2 * $workforce && $player->stone >= 1 * $workforce) {
@@ -76,11 +85,16 @@ class Operation extends CI_CONTROLLER {
                 	'label'=>'目标ID',
                 	'rules'=>'required'
              	),
-             	array(
-                	'field'=>'selflocation',
-                 	'label'=>'自身位置',
-                 	'rules'=>'required'
-             	)
+                array(
+                    'field'=>'longitude',
+                    'label'=>'自身位置的经度',
+                    'rules'=>'required'
+                ),
+                array(
+                    'field'=>'latitude',
+                    'label'=>'自身位置的纬度',
+                    'rules'=>'required'
+                )
         );
         $this->form_validation->set_rules($config);
         $playerId = $this->session->userdata('playerId');
@@ -89,9 +103,12 @@ class Operation extends CI_CONTROLLER {
         	return;
         }
         $targetId = $this->input->post('targetId');
-        $selfLocation = $this->input->post('selflocation');
+        $user['longitude'] = $this->input->post('longitude');
+        $user['latitude'] = $this->input->post('latitude');
         $locationInfo = $this->construction->get_by_id($targetId);
-        if($this->distance->calculateDistance($selfLocation, $locationInfo->location) < self::vision) {
+        $target['longitude'] = $locationInfo->longitude;
+        $target['latitude'] = $location->latitude;
+        if($this->distance->calculateDistance($user, $target) < self::vision) {
         	$attackDamage = 1;
         	$state = $this->construction->attack($playerId, $targetId, $attackDamage);
         	echo $state; // durability
@@ -110,8 +127,13 @@ class Operation extends CI_CONTROLLER {
                     'rules'=>'required'
                 ),
                 array(
-                    'field'=>'selflocation',
-                    'label'=>'自身位置',
+                    'field'=>'longitude',
+                    'label'=>'自身位置的经度',
+                    'rules'=>'required'
+                ),
+                array(
+                    'field'=>'latitude',
+                    'label'=>'自身位置的纬度',
                     'rules'=>'required'
                 )
         );
@@ -122,9 +144,12 @@ class Operation extends CI_CONTROLLER {
             return;
         }
         $targetId = $this->input->post('targetId');
-        $selfLocation = $this->input->post('selflocation');
+        $user['longitude'] = $this->input->post('longitude');
+        $user['latitude'] = $this->input->post('latitude');
         $locationInfo = $this->construction->get_by_id($targetId);
-        if($this->distance->calculateDistance($selfLocation, $locationInfo->location) < self::vision) {
+        $target['longitude'] = $locationInfo->longitude;
+        $target['latitude'] = $location->latitude;
+        if($this->distance->calculateDistance($user, $target) < self::vision) {
             $state = $this->construction->abandon($playerId, $targetId);
             echo $state;
         }
@@ -141,11 +166,16 @@ class Operation extends CI_CONTROLLER {
                 	'label'=>'目标ID',
                 	'rules'=>'required'
              	),
-             	array(
-                	'field'=>'selflocation',
-                 	'label'=>'自身位置',
-                 	'rules'=>'required'
-             	)
+                array(
+                    'field'=>'longitude',
+                    'label'=>'自身位置的经度',
+                    'rules'=>'required'
+                ),
+                array(
+                    'field'=>'latitude',
+                    'label'=>'自身位置的纬度',
+                    'rules'=>'required'
+                )
         );
         $this->form_validation->set_rules($config);
         $playerId = $this->session->userdata('playerId');
@@ -154,10 +184,13 @@ class Operation extends CI_CONTROLLER {
         	return;
         }
         $targetId = $this->input->post('targetId');
-        $selfLocation = $this->input->post('selflocation');
-        $locationInfo = $this->resourcebase->get_by_id($targetId);
         $player = $this->mproperty->get_by_id($playerId);
-        if($this->distance->calculateDistance($selfLocation, $locationInfo->location) < self::vision) {
+        $user['longitude'] = $this->input->post('longitude');
+        $user['latitude'] = $this->input->post('latitude');
+        $locationInfo = $this->construction->get_by_id($targetId);
+        $target['longitude'] = $locationInfo->longitude;
+        $target['latitude'] = $location->latitude;
+        if($this->distance->calculateDistance($user, $target) < self::vision) {
         	$workforce = 1;
         	$type = $this->resourcebase->collect($targetId, $workforce);
         	switch($type) {
