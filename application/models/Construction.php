@@ -59,7 +59,7 @@ class Construction extends CI_Model{
 	}
 
 	function get_by_id($targetId) {
-		return $this->db->get_where('construction', array('id' => $targetId))->row();
+		return $this->db->query("SELECT id,playerId,X(location) as longitude, Y(location) as latitude, value, maxdurability FROM construction WHERE id = $targetId")->row()	;
 	}
 
 	function get_all() {

@@ -104,11 +104,11 @@ class Request extends CI_CONTROLLER {
     		$detail = $this->construction->get_by_id($targetId);
     		$username = $this->mproperty->get_username($detail->playerId);
     		$res = array(
-    					'id'=>$detail->id, 'playerId'=>$detail->playerId, 'username'=>$username, 'location'=>$detail->location,
+    					'id'=>$detail->id, 'playerId'=>$detail->playerId, 'username'=>$username, 'longitude'=>$detail->longitude, 'latitude'=>$detail->latitude,
     					'value'=>$detail->value, 'maxdurability'=>$detail->maxdurability
     			);
     		echo json_encode($res);
-    	}
+        	}
     	else {
     		echo -2;
     		return;
