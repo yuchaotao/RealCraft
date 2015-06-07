@@ -235,6 +235,8 @@ class Operation extends CI_CONTROLLER {
         			break;
         	}
         	$this->mproperty->update_property($playerId, $player);
+        } else {
+            echo -2;   
         }
     }
 }
