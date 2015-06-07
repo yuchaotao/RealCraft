@@ -54,8 +54,8 @@ class Construction extends CI_Model{
 		return 1;
 	}
 
-	function setBase($location){
-		$this->db->insert('construction', array('playerId'=>-1, 'location'=>$location, 'value'=>0));
+	function setBase($longitude,$latitude){
+		$this->db->query("INSERT INTO construction (playerId, location, value) VALUES ('-1', PointFromText('POINT($longitude $latitude)'), '0');");
 	}
 
 	function get_by_id($targetId) {
@@ -63,6 +63,19 @@ class Construction extends CI_Model{
 	}
 
 	function get_all() {
-		return $this->db->get('construction');
+		return $this->db->query("SELECT id,playerId,X(location) as longitude, Y(location) as latitude, value, maxdurability FROM construction");
+	}
+	function delete_all() {
+		return $this->db->truncate('construction');
+	}
+
+	function get_surrounding($longitude, $latitude, $vision){
+		$leftdown = (string)($longitude - $vision).' '.(string)($latitude - $vision);
+		$rightdown = (string)($longitude + $vision).' '.(string)($latitude - $vision);
+		$upright = (string)($longitude + $vision).' '.(string)($latitude + $vision);
+		$upleft = (string)($longitude - $vision).' '.(string)($latitude + $vision);
+		$query = $this->db->simple_query("SET @g1 = GeomFromText('Polygon(($leftdown,$rightdown,$upright,$upleft,$leftdown))');");
+		$query = $this->db->query("SELECT * from construction WHERE MBRContains(@g1,location);");
+		return $query->result();
 	}
 }

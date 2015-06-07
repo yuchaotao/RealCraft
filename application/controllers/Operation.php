@@ -1,7 +1,7 @@
 <?php
 
-class Operation extends CI_Controller {
-	const vision = 0.01;
+class Operation extends MY_CONTROLLER {
+    // const vision has been moved to the parent controller
 	function __construct(){
         parent::__construct();
         $this->load->database();

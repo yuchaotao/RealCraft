@@ -1,6 +1,6 @@
 <?php
 
-class Request extends CI_Controller {
+class Request extends MY_CONTROLLER {
 	function __construct(){
     	parent::__construct();
         $this->load->database();
@@ -26,24 +26,52 @@ class Request extends CI_Controller {
     	echo json_encode($res);
     }
 
+    function test(){
+        $longitude = '123';
+        $latitude = '456';
+        $location = array('longitude'=>$longitude, 'latitude'=>$latitude);
+        $this->construction->setBase($location);
+    }
+
     function download() {
+        $config = array(
+            array(
+                'field' => 'longitude',
+                'label' => '玩家坐标_经度',
+                'rules' => 'required'
+                ),
+            array(
+                'field' => 'latitude',
+                'label' => '玩家坐标_纬度',
+                'rules' => 'required'
+                )
+            );
+        $this->form_validation->set_rules($config);
+
+        $longitude = $this->input->post('longitude');
+        $latitude = $this->input->post('latitude');
+
+        $location = array('longitude'=>$longitude, 'latitude'=>$latitude);
+
     	$playerId = $this->session->userdata('playerId');
     	if($playerId == NULL) {
     		echo -1;
     		return;
     	}
-    	$resourceBase = $this->resourcebase->get_all();
-    	$construction = $this->construction->get_all();
-    	$res = '';
+        // $resourceBase = $this->resourcebase->get_surrounding($longitude, $latitude, $vision);
+        // $construction = $this->construction->get_surrounding($longitude, $latitude, $vision);
+        $resourceBase = $this->resourcebase->get_all();
+        $construction = $this->construction->get_all();
+    	$res = array();
     	foreach($resourceBase->result() as $row) {
-    		$data = array('id'=>$row->id, 'location'=>$row->location, 'type'=>1);
-    		$res .= json_encode($data).',';
+    		$data = array('id'=>$row->id, 'longitude'=>$row->longitude, 'latitude'=>$row->latitude, 'type'=>1);
+            array_push($res, $data);
     	}
     	foreach($construction->result() as $row) {
-    		$data = array('id'=>$row->id, 'location'=>$row->location, 'type'=>2);
-    		$res .= json_encode($data).',';
+    		$data = array('id'=>$row->id, 'longitude'=>$row->longitude, 'latitude'=>$row->latitude, 'type'=>2);
+            array_push($res, $data);
     	}
-    	echo '['.substr($res,0,strlen($res)-1).']';
+        echo json_encode($res);
     }
 
     function detail() {

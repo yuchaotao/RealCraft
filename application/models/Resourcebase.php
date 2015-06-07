@@ -60,8 +60,8 @@ class Resourcebase extends CI_Model {
 		else
 			return 0;
 	}
-	function setBase($location, $wood, $stone, $food){
-		$this->db->insert('resourcebase',array("location"=>$location, "wood"=>$wood, "stone"=>$stone, "food"=>$food));
+	function setBase($longitude, $latitude, $wood, $stone, $food){
+		$this->db->query("INSERT INTO resourcebase (location, wood, stone, food) VALUES (PointFromText('POINT($longitude $latitude)'), '$wood', '$stone', '$food');");
 	}	
 
 	function fresh($WOOD_RANGE, $STONE_RANGE, $FOOD_RANGE){
@@ -80,6 +80,10 @@ class Resourcebase extends CI_Model {
 	}
 
 	function get_all() {
-		return $this->db->get('resourcebase');
+		return $this->db->query("SELECT id, X(location) as longitude, Y(location) as latitude, wood, food, stone FROM resourcebase;");
+	}
+
+	function delete_all() {
+		return $this->db->truncate('resourcebase');
 	}
 }

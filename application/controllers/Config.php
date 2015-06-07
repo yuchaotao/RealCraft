@@ -1,6 +1,6 @@
 <?php
 
-class Config extends CI_Controller{
+class Config extends MY_CONTROLLER{
 
     function __construct(){
         parent::__construct();
@@ -36,9 +36,11 @@ class Config extends CI_Controller{
 
     function init(){
 
-
         echo "begin";
         echo "</br>";
+
+        $this->construction->delete_all();
+        $this->resourceBase->delete_all();
         // 生成随机点，并存入数据库
         for ($y_step=array('longitude'=>0, 'latitude'=>0);
             $y_step['longitude'] > $this->GPS_RANGE['leftUp']['longitude'] - $this->GPS_RANGE['leftDown']['longitude'] - $this->GPS_Y_STEP['longitude'],
@@ -63,15 +65,15 @@ class Config extends CI_Controller{
                 $location['latitude']  = $location_ref['latitude'] + 
                                         $this->GPS_X_STEP['latitude'] * (mt_rand(1,$this->GPS_INTERVAL) / $this->GPS_INTERVAL) + 
                                         $this->GPS_Y_STEP['latitude'] * (mt_rand(1,$this->GPS_INTERVAL) / $this->GPS_INTERVAL);
-                $location = $location['longitude'].','.$location['latitude'];
+                // $location = $location['longitude'].','.$location['latitude'];
             
                 $type = mt_rand(1,100);
                 // echo "t";
                 if ($type < 100 * $this->RATIO_CONS_RES){
-                    $this->construction->setBase($location);
+                    $this->construction->setBase($location['longitude'],$location['latitude']);
                     // echo "t";
                 } else {
-                    $this->resourceBase->setBase($location,
+                    $this->resourceBase->setBase($location['longitude'],$location['latitude'],
                         mt_rand($this->WOOD_RANGE['start'],$this->WOOD_RANGE['end']),
                         mt_rand($this->STONE_RANGE['start'],$this->STONE_RANGE['end']),
                         mt_rand($this->FOOD_RANGE['start'],$this->FOOD_RANGE['end'])
