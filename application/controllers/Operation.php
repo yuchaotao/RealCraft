@@ -1,7 +1,7 @@
 <?php
 
 class Operation extends CI_CONTROLLER {
-    const vision = 0.001;
+    const vision = 0.002;
     // const vision has been moved to the parent controller
 	function __construct(){
         parent::__construct();

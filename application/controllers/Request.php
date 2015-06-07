@@ -1,7 +1,7 @@
 <?php
 
 class Request extends CI_CONTROLLER {
-    const vision = 0.001;
+    const vision = 0.002;
 	function __construct(){
     	parent::__construct();
         $this->load->database();
