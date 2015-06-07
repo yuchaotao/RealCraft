@@ -86,4 +86,14 @@ class Resourcebase extends CI_Model {
 	function delete_all() {
 		return $this->db->truncate('resourcebase');
 	}
+
+	function get_surrounding($longitude, $latitude, $vision){
+		$leftdown = (string)($longitude - $vision).' '.(string)($latitude - $vision);
+		$rightdown = (string)($longitude + $vision).' '.(string)($latitude - $vision);
+		$upright = (string)($longitude + $vision).' '.(string)($latitude + $vision);
+		$upleft = (string)($longitude - $vision).' '.(string)($latitude + $vision);
+		$query = $this->db->simple_query("SET @g1 = GeomFromText('Polygon(($leftdown,$rightdown,$upright,$upleft,$leftdown))');");
+		$query = $this->db->query("SELECT id, X(location) as longitude, Y(location) as latitude, wood, food, stone FROM resourcebase WHERE MBRContains(@g1,location);");
+		return $query;
+	}
 }

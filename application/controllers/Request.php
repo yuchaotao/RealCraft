@@ -1,6 +1,7 @@
 <?php
 
 class Request extends CI_CONTROLLER {
+    const vision = 0.01;
 	function __construct(){
     	parent::__construct();
         $this->load->database();
@@ -58,10 +59,10 @@ class Request extends CI_CONTROLLER {
     		echo -1;
     		return;
     	}
-        // $resourceBase = $this->resourcebase->get_surrounding($longitude, $latitude, $vision);
-        // $construction = $this->construction->get_surrounding($longitude, $latitude, $vision);
-        $resourceBase = $this->resourcebase->get_all();
-        $construction = $this->construction->get_all();
+        $resourceBase = $this->resourcebase->get_surrounding($longitude, $latitude, self::vision);
+        $construction = $this->construction->get_surrounding($longitude, $latitude, self::vision);
+        // $resourceBase = $this->resourcebase->get_all();
+        // $construction = $this->construction->get_all();
     	$res = array();
     	foreach($resourceBase->result() as $row) {
     		$data = array('id'=>$row->id, 'longitude'=>$row->longitude, 'latitude'=>$row->latitude, 'type'=>1);
@@ -72,7 +73,7 @@ class Request extends CI_CONTROLLER {
             array_push($res, $data);
     	}
         echo json_encode($res);
-    }
+    }   
 
     function detail() {
     	$config = array(

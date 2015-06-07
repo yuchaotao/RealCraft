@@ -75,7 +75,7 @@ class Construction extends CI_Model{
 		$upright = (string)($longitude + $vision).' '.(string)($latitude + $vision);
 		$upleft = (string)($longitude - $vision).' '.(string)($latitude + $vision);
 		$query = $this->db->simple_query("SET @g1 = GeomFromText('Polygon(($leftdown,$rightdown,$upright,$upleft,$leftdown))');");
-		$query = $this->db->query("SELECT * from construction WHERE MBRContains(@g1,location);");
-		return $query->result();
+		$query = $this->db->query("SELECT id,playerId,X(location) as longitude, Y(location) as latitude, value, maxdurability FROM construction WHERE MBRContains(@g1,location);");
+		return $query;
 	}
 }
