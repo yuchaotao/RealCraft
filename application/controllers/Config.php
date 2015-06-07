@@ -1,7 +1,7 @@
 <?php
 
-class Config extends MY_CONTROLLER{
-
+class Config extends CI_CONTROLLER{
+    const $vision = 0.01;
     function __construct(){
         parent::__construct();
         $this->load->database();

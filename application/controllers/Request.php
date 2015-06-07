@@ -1,6 +1,6 @@
 <?php
 
-class Request extends MY_CONTROLLER {
+class Request extends CI_CONTROLLER {
 	function __construct(){
     	parent::__construct();
         $this->load->database();
