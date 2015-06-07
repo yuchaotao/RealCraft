@@ -56,7 +56,7 @@ class Operation extends CI_CONTROLLER {
         $user['latitude'] = $this->input->post('latitude');
         $locationInfo = $this->construction->get_by_id($targetId);
         $target['longitude'] = $locationInfo->longitude;
-        $target['latitude'] = $location->latitude;
+        $target['latitude'] = $locationInfo->latitude;
         if($this->distance->calculateDistance($user, $target) < self::vision) {
         	$workforce = 1;
             $player = $this->mproperty->get_by_id($playerId);
@@ -107,7 +107,7 @@ class Operation extends CI_CONTROLLER {
         $user['latitude'] = $this->input->post('latitude');
         $locationInfo = $this->construction->get_by_id($targetId);
         $target['longitude'] = $locationInfo->longitude;
-        $target['latitude'] = $location->latitude;
+        $target['latitude'] = $locationInfo->latitude;
         if($this->distance->calculateDistance($user, $target) < self::vision) {
         	$attackDamage = 1;
         	$state = $this->construction->attack($playerId, $targetId, $attackDamage);
@@ -148,7 +148,7 @@ class Operation extends CI_CONTROLLER {
         $user['latitude'] = $this->input->post('latitude');
         $locationInfo = $this->construction->get_by_id($targetId);
         $target['longitude'] = $locationInfo->longitude;
-        $target['latitude'] = $location->latitude;
+        $target['latitude'] = $locationInfo->latitude;
         if($this->distance->calculateDistance($user, $target) < self::vision) {
             $state = $this->construction->abandon($playerId, $targetId);
             echo $state;
@@ -189,7 +189,7 @@ class Operation extends CI_CONTROLLER {
         $user['latitude'] = $this->input->post('latitude');
         $locationInfo = $this->construction->get_by_id($targetId);
         $target['longitude'] = $locationInfo->longitude;
-        $target['latitude'] = $location->latitude;
+        $target['latitude'] = $locationInfo->latitude;
         if($this->distance->calculateDistance($user, $target) < self::vision) {
         	$workforce = 1;
         	$type = $this->resourcebase->collect($targetId, $workforce);
