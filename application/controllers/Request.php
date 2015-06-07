@@ -59,10 +59,9 @@ class Request extends CI_CONTROLLER {
     		echo -1;
     		return;
     	}
-        $resourceBase = $this->resourcebase->get_surrounding($longitude, $latitude, self::vision);
-        $construction = $this->construction->get_surrounding($longitude, $latitude, self::vision);
-        // $resourceBase = $this->resourcebase->get_all();
-        // $construction = $this->construction->get_all();
+
+        $resourceBase = $this->resourcebase->get_surrounding($longitude, $latitude, $vision);
+        $construction = $this->construction->get_surrounding($longitude, $latitude, $vision);
     	$res = array();
     	foreach($resourceBase->result() as $row) {
     		$data = array('id'=>$row->id, 'longitude'=>$row->longitude, 'latitude'=>$row->latitude, 'type'=>1);
