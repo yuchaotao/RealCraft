@@ -203,7 +203,7 @@ class Operation extends CI_CONTROLLER {
         $targetId = $this->input->post('targetId');
         $user['longitude'] = $this->input->post('longitude');
         $user['latitude'] = $this->input->post('latitude');
-        $locationInfo = $this->construction->get_by_id($targetId);
+        $locationInfo = $this->resourcebase->get_by_id($targetId);
         $target['longitude'] = $locationInfo->longitude;
         $target['latitude'] = $locationInfo->latitude;
         if($this->distance->calculateDistance($user, $target) < self::vision) {
