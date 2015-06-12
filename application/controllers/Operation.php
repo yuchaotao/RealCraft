@@ -2,6 +2,7 @@
 
 class Operation extends CI_CONTROLLER {
     const vision = 0.002;
+    const workerPrice = 10;
     // const vision has been moved to the parent controller
 	function __construct(){
         parent::__construct();
@@ -58,8 +59,8 @@ class Operation extends CI_CONTROLLER {
         $target['longitude'] = $locationInfo->longitude;
         $target['latitude'] = $locationInfo->latitude;
         if($this->distance->calculateDistance($user, $target) < self::vision) {
-        	$workforce = 1;
             $player = $this->mproperty->get_by_id($playerId);
+            $workforce = $player->workforce;
             if($player->wood >= 2 * $workforce && $player->stone >= 1 * $workforce) {
         	   $state = $this->construction->build($playerId, $targetId, $workforce);
                $player->wood -= 2 * $workforce;
@@ -109,13 +110,13 @@ class Operation extends CI_CONTROLLER {
         $target['longitude'] = $locationInfo->longitude;
         $target['latitude'] = $locationInfo->latitude;
         if($this->distance->calculateDistance($user, $target) < self::vision) {
-        	$attackDamage = 1;
+            $player = $this->mproperty->get_by_id($playerId);
+            $attackDamage = $player->workforce;
         	$state = $this->construction->attack($playerId, $targetId, $attackDamage);
         	echo $state; // durability
             if($state == 0) {
                 // echo $locationInfo->playerId;
                 $targetPlayer = $this->mproperty->get_by_id($locationInfo->playerId);
-                $player = $this->mproperty->get_by_id($playerId);
                 $plunderWood = rand(0, round($targetPlayer->wood / 8));
                 $plunderFood = rand(0, round($targetPlayer->food / 8));
                 $plunderStone = rand(0, round($targetPlayer->stone / 8));
@@ -200,14 +201,14 @@ class Operation extends CI_CONTROLLER {
         	return;
         }
         $targetId = $this->input->post('targetId');
-        $player = $this->mproperty->get_by_id($playerId);
         $user['longitude'] = $this->input->post('longitude');
         $user['latitude'] = $this->input->post('latitude');
         $locationInfo = $this->construction->get_by_id($targetId);
         $target['longitude'] = $locationInfo->longitude;
         $target['latitude'] = $locationInfo->latitude;
         if($this->distance->calculateDistance($user, $target) < self::vision) {
-        	$workforce = 1;
+            $player = $this->mproperty->get_by_id($playerId);
+            $workforce = $player->workforce;
         	$type = $this->resourcebase->collect($targetId, $workforce);
         	switch($type) {
         		case 1:
@@ -257,4 +258,29 @@ class Operation extends CI_CONTROLLER {
     }
 
     //hire
+    function hire() {
+        $config = array(
+                array(
+                    'field'=>'quantity',
+                    'label'=>'雇佣数量',
+                    'rules'=>'required'
+                )
+        );
+        $this->form_validation->set_rules($config);
+        $playerId = $this->session->userdata('playerId');
+        if($playerId == NULL) {
+            echo -1;
+            return;
+        }
+        $quantity = $this->input->post('quantity');
+        $player = $this->mproperty->get_by_id($playerId);
+        if($player->food < $quntity * (self::workerPrice)) {
+            echo -2;
+            return;
+        }
+        $player->food = $player->food - $quntity * (self::workerPrice);
+        $player->workforce = $player->workforce + $quntity;
+        $this->mproperty->update_property($playerId, $player);
+        echo 1;
+    }
 }
