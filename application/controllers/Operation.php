@@ -112,6 +112,9 @@ class Operation extends CI_CONTROLLER {
         	$attackDamage = 1;
         	$state = $this->construction->attack($playerId, $targetId, $attackDamage);
         	echo $state; // durability
+            if($state == 0) {
+                echo $locationInfo->playerId;
+            }
         }
         else {
         	echo -2;
@@ -239,4 +242,6 @@ class Operation extends CI_CONTROLLER {
             echo -2;   
         }
     }
+
+    //hire
 }

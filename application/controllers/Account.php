@@ -18,6 +18,10 @@ class Account extends CI_CONTROLLER{
         $this->load->view('account/register');
     }
 
+    function index1() {
+        $this->load->view('account/login');
+    }
+
     function login(){
         $config = array(
                     array(
