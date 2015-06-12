@@ -274,7 +274,7 @@ class Operation extends CI_CONTROLLER {
         }
         $quantity = $this->input->post('quantity');
         $player = $this->mproperty->get_by_id($playerId);
-        if($player->food < $quntity * (self::workerPrice)) {
+        if($player->food < $quantity * (self::workerPrice)) {
             echo -2;
             return;
         }
