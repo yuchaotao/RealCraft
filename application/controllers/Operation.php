@@ -116,9 +116,9 @@ class Operation extends CI_CONTROLLER {
                 // echo $locationInfo->playerId;
                 $targetPlayer = $this->mproperty->get_by_id($locationInfo->playerId);
                 $player = $this->mproperty->get_by_id($playerId);
-                $plunderWood = rand(0, round($targetPlayer->wood / 2));
-                $plunderFood = rand(0, round($targetPlayer->food / 2));
-                $plunderStone = rand(0, round($targetPlayer->stone / 2));
+                $plunderWood = rand(0, round($targetPlayer->wood / 8));
+                $plunderFood = rand(0, round($targetPlayer->food / 8));
+                $plunderStone = rand(0, round($targetPlayer->stone / 8));
                 $targetPlayer->wood = $targetPlayer->wood - $plunderWood;
                 $targetPlayer->food = $targetPlayer->food - $plunderFood;
                 $targetPlayer->stone = $targetPlayer->stone - $plunderStone;
