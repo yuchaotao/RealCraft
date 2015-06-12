@@ -113,7 +113,20 @@ class Operation extends CI_CONTROLLER {
         	$state = $this->construction->attack($playerId, $targetId, $attackDamage);
         	echo $state; // durability
             if($state == 0) {
-                echo $locationInfo->playerId;
+                // echo $locationInfo->playerId;
+                $targetPlayer = $this->mproperty->get_by_id($locationInfo->playerId);
+                $player = $this->mproperty->get_by_id($playerId);
+                $plunderWood = rand(0, round($targetPlayer->wood / 2));
+                $plunderFood = rand(0, round($targetPlayer->food / 2));
+                $plunderStone = rand(0, round($targetPlayer->stone / 2));
+                $targetPlayer->wood = $targetPlayer->wood - $plunderWood;
+                $targetPlayer->food = $targetPlayer->food - $plunderFood;
+                $targetPlayer->stone = $targetPlayer->stone - $plunderStone;
+                $player->wood = $player->wood + $plunderWood;
+                $player->food = $player->food + $plunderFood;
+                $player->stone = $player->stone + $plunderStone;
+                $this->mproperty->update_property($playerId, $player);
+                $this->mproperty->update_property($locationInfo->playerId, $targetPlayer);
             }
         }
         else {
