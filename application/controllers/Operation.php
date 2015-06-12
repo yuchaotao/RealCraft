@@ -278,8 +278,8 @@ class Operation extends CI_CONTROLLER {
             echo -2;
             return;
         }
-        $player->food = $player->food - $quntity * (self::workerPrice);
-        $player->workforce = $player->workforce + $quntity;
+        $player->food = $player->food - $quantity * (self::workerPrice);
+        $player->workforce = $player->workforce + $quantity;
         $this->mproperty->update_property($playerId, $player);
         echo 1;
     }
