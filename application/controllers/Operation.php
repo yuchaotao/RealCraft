@@ -55,6 +55,11 @@ class Operation extends CI_CONTROLLER {
         $targetId = $this->input->post('targetId');
         $user['longitude'] = $this->input->post('longitude');
         $user['latitude'] = $this->input->post('latitude');
+        $currentTime = time();
+        if($currentTime - $this->session->userdata('last_post') < 1) {
+            return;
+        }
+        $this->session->set_userdata('last_post', $currentTime);
         $locationInfo = $this->construction->get_by_id($targetId);
         $target['longitude'] = $locationInfo->longitude;
         $target['latitude'] = $locationInfo->latitude;
@@ -106,6 +111,11 @@ class Operation extends CI_CONTROLLER {
         $targetId = $this->input->post('targetId');
         $user['longitude'] = $this->input->post('longitude');
         $user['latitude'] = $this->input->post('latitude');
+        $currentTime = time();
+        if($currentTime - $this->session->userdata('last_post') < 1) {
+            return;
+        }
+        $this->session->set_userdata('last_post', $currentTime);
         $locationInfo = $this->construction->get_by_id($targetId);
         $target['longitude'] = $locationInfo->longitude;
         $target['latitude'] = $locationInfo->latitude;
@@ -203,6 +213,11 @@ class Operation extends CI_CONTROLLER {
         $targetId = $this->input->post('targetId');
         $user['longitude'] = $this->input->post('longitude');
         $user['latitude'] = $this->input->post('latitude');
+        $currentTime = time();
+        if($currentTime - $this->session->userdata('last_post') < 1) {
+            return;
+        }
+        $this->session->set_userdata('last_post', $currentTime);
         $locationInfo = $this->resourcebase->get_by_id($targetId);
         $target['longitude'] = $locationInfo->longitude;
         $target['latitude'] = $locationInfo->latitude;

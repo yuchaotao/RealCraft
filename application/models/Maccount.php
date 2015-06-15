@@ -9,7 +9,8 @@ class Maccount extends CI_Model{
 	function login($username)
 	{
 		$playerId = $this->get_by_username($username)->id;
-		$data = array('username'=>$username, 'logged_in'=>TRUE, 'playerId'=>$playerId);
+		$time = time();
+		$data = array('username'=>$username, 'logged_in'=>TRUE, 'playerId'=>$playerId, 'last_post'=>$time);
 		$this->session->set_userdata($data);                    //添加session数据
 	}
 	/**
