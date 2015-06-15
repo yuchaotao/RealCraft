@@ -57,6 +57,7 @@ class Operation extends CI_CONTROLLER {
         $user['latitude'] = $this->input->post('latitude');
         $currentTime = time();
         if($currentTime - $this->session->userdata('last_post') < 1) {
+            echo -4;
             return;
         }
         $this->session->set_userdata('last_post', $currentTime);
@@ -113,6 +114,7 @@ class Operation extends CI_CONTROLLER {
         $user['latitude'] = $this->input->post('latitude');
         $currentTime = time();
         if($currentTime - $this->session->userdata('last_post') < 1) {
+            echo -4;
             return;
         }
         $this->session->set_userdata('last_post', $currentTime);
@@ -215,6 +217,7 @@ class Operation extends CI_CONTROLLER {
         $user['latitude'] = $this->input->post('latitude');
         $currentTime = time();
         if($currentTime - $this->session->userdata('last_post') < 1) {
+            echo -4;
             return;
         }
         $this->session->set_userdata('last_post', $currentTime);
