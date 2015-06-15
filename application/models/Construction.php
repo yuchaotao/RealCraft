@@ -18,16 +18,19 @@ class Construction extends CI_Model{
 		// echo "<br>ID matched.<br>";
 		$newConstruction = $query->row();
 		// echo $newConstruction->location, ' ', $newConstruction->value, '<br>';
+		$output = 0;
 		if($workForce)
 		{
 			$newConstruction->value += $workForce;
-			if($newConstruction->value > $newConstruction->maxdurability)
+			if($newConstruction->value > $newConstruction->maxdurability) {
+				$output = $newConstruction->value - $newConstruction->maxdurability;
 				$newConstruction->value = $newConstruction->maxdurability;
+			}
 			$this->db->where('id', $targetId);
 			$this->db->update('construction', $newConstruction);
 		}
 		
-		return $newConstruction->value;
+		return $output;
 	}
 
 	function attack($playerId, $targetId, $attackDamage) {

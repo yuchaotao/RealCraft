@@ -67,11 +67,11 @@ class Operation extends CI_CONTROLLER {
             $player = $this->mproperty->get_by_id($playerId);
             $workforce = $player->workforce;
             if($player->wood >= 2 * $workforce && $player->stone >= 1 * $workforce) {
-        	   $state = $this->construction->build($playerId, $targetId, $workforce);
-               $player->wood -= 2 * $workforce;
-               $player->stone -= $workforce;
+        	   $redundancy = $this->construction->build($playerId, $targetId, $workforce);
+               $player->wood -= 2 * ($workforce - $redundancy);
+               $player->stone -= ($workforce - $redundancy);
                $this->mproperty->update_property($playerId, $player);
-               echo $state; // durability
+               echo $redundancy; // durability
             }
             else {
                 echo -3;
