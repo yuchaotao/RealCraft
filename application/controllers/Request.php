@@ -2,6 +2,7 @@
 
 class Request extends CI_CONTROLLER {
     const vision = 0.002;
+    const workerPrice = 100;
 	function __construct(){
     	parent::__construct();
         $this->load->database();
@@ -122,6 +123,7 @@ class Request extends CI_CONTROLLER {
             return;
         }
         $player = $this->mproperty->get_by_id($playerId);
-        echo $player->workforce;
+        $consume = (int) pow(10, $player->workforce - 1) * (self::workerPrice);
+        echo $consume;
     }
 }
