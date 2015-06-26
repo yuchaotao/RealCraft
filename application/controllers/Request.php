@@ -114,4 +114,14 @@ class Request extends CI_CONTROLLER {
     		return;
     	}
     }
+
+    function workforceCost() {
+        $playerId = $this->session->userdata('playerId');
+        if($playerId == NULL) {
+            echo -1;
+            return;
+        }
+        $player = $this->mproperty->get_by_id($playerId);
+        echo $player->workforce;
+    }
 }

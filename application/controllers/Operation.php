@@ -2,7 +2,7 @@
 
 class Operation extends CI_CONTROLLER {
     const vision = 0.002;
-    const workerPrice = 10;
+    const workerPrice = 100;
     // const vision has been moved to the parent controller
 	function __construct(){
         parent::__construct();
@@ -292,12 +292,13 @@ class Operation extends CI_CONTROLLER {
         }
         $quantity = $this->input->post('quantity');
         $player = $this->mproperty->get_by_id($playerId);
-        if($player->food < $quantity * (self::workerPrice)) {
+        $consume = power(10, $player->workforce - 1) * (self::workerPrice);
+        if($player->food < $consume) {
             echo -2;
             return;
         }
-        $player->food = $player->food - $quantity * (self::workerPrice);
-        $player->workforce = $player->workforce + $quantity;
+        $player->food = $player->food - $consume;
+        $player->workforce = $player->workforce + 1;
         $this->mproperty->update_property($playerId, $player);
         echo 1;
     }
