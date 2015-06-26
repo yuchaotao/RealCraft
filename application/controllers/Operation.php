@@ -292,7 +292,7 @@ class Operation extends CI_CONTROLLER {
         }
         $quantity = $this->input->post('quantity');
         $player = $this->mproperty->get_by_id($playerId);
-        $consume = power(10, $player->workforce - 1) * (self::workerPrice);
+        $consume = (int) pow(10, $player->workforce - 1) * (self::workerPrice);
         if($player->food < $consume) {
             echo -2;
             return;
