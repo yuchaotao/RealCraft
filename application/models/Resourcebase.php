@@ -18,6 +18,7 @@ class Resourcebase extends CI_Model {
 		$resource->wood -= $got['wood'];
 		$resource->stone -= $got['stone'];
 		$resource->food -= $got['food'];
+		$this->db->update('resourcebase', $resource);
 		return $got;
 	}
 
