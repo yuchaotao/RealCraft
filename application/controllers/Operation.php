@@ -228,13 +228,13 @@ class Operation extends CI_CONTROLLER {
             $player = $this->mproperty->get_by_id($playerId);
             $workforce = $player->workforce;
         	$got = $this->resourcebase->collect($targetId, $workforce);
-            if($got->wood == 0 && $got->stone == 0 && $got->food == 0) {
+            if($got['wood'] == 0 && $got['stone'] == 0 && $got['food'] == 0) {
                 echo -3;
                 return;
             }
-            $player->wood += $got->wood;
-            $player->stone += $got->stone;
-            $player->food += $got->food;
+            $player->wood += $got['wood'];
+            $player->stone += $got['stone'];
+            $player->food += $got['food'];
             $this->mproperty->update_property($playerId, $player);
             echo 1;
         } else {
