@@ -45,6 +45,7 @@ class Account extends CI_CONTROLLER{
         }
         else {
             //注册session,设定登录状态
+            session_save_path('C:\Users\AA\Documents\GitHub\RealCraft\application\session');
             $this->maccount->login($this->_username);
             $user_tmp = $this->maccount->get_by_username($this->_username);
             $data['message'] = $this->session->userdata('username').' You are logged in! Now take a look at the '

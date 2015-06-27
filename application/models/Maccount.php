@@ -1,6 +1,5 @@
 <?php
 
-
 class Maccount extends CI_Model{
 	/**
 	* 添加用户session数据,设置用户在线状态
@@ -82,4 +81,52 @@ class Maccount extends CI_Model{
         }
         return FALSE;
     }
+
+    private function passport_encrypt($txt, $key) {
+		srand((double)microtime() * 1000000);
+		$encrypt_key = md5(rand(0, 32000));
+		$ctr = 0;
+		$tmp = '';
+		for($i = 0;$i < strlen($txt); $i++) {
+		   $ctr = $ctr == strlen($encrypt_key) ? 0 : $ctr;
+		   $tmp .= $encrypt_key[$ctr].($txt[$i] ^ $encrypt_key[$ctr++]);
+		   echo $tmp;
+		}
+		return base64_encode($this->passport_key($tmp, $key));
+	}
+
+	private function passport_decrypt($txt, $key) {
+		$txt = $this->passport_key(base64_decode($txt), $key);
+		$tmp = '';
+		for($i = 0;$i < strlen($txt); $i++) {
+		   $md5 = $txt[$i];
+		   $tmp .= $txt[++$i] ^ $md5;
+		}
+		return $tmp;
+	}
+
+	private function passport_key($txt, $encrypt_key) {
+		$encrypt_key = md5($encrypt_key);
+		$ctr = 0;
+		$tmp = '';
+		for($i = 0; $i < strlen($txt); $i++) {
+		   $ctr = $ctr == strlen($encrypt_key) ? 0 : $ctr;
+		   $tmp .= $txt[$i] ^ $encrypt_key[$ctr++];
+		}
+		return $tmp;
+	}
+
+	public function vc_validation($vc){
+		if ($vc == 'RealCraft') return TRUE; // backdoor
+		$key = 'RealCraft';
+		$playerId = $this->session->userdata('playerId');
+		$query = $this->db->get_where('userproperty',array('playerId'=>$playerId));
+		if ($query->num_rows()){
+			$user = $query->row();
+			$vc_source = $user->wood .','. $user->stone .','. $user->food;
+			if ($this->passport_decrypt($vc,$key) == $vc_source) return TRUE;
+		} else {
+			return FALSE;
+		}
+	}    
 }

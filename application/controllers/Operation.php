@@ -14,6 +14,7 @@ class Operation extends CI_CONTROLLER {
         $this->load->library('session');
         $this->load->model('distance');
         $this->load->model('mproperty');
+        $this->load->model('maccount');
     }
 
     function index() {
@@ -42,6 +43,11 @@ class Operation extends CI_CONTROLLER {
                     'field'=>'latitude',
                     'label'=>'自身位置的纬度',
                     'rules'=>'required'
+                ),
+                array(
+                    'field'=>'vc',
+                    'label'=>'验证码',
+                    'rules'=>'required'
                 )
 
         );
@@ -50,6 +56,10 @@ class Operation extends CI_CONTROLLER {
         if($playerId == NULL) {
         	echo -1;
         	return;
+        }
+        if( ! $this->maccount->vc_validation($this->input->post('vc'))){
+            echo -5;
+            return;
         }
         //echo "Your id is: ", $playerId, "<br>";
         $targetId = $this->input->post('targetId');
@@ -101,6 +111,11 @@ class Operation extends CI_CONTROLLER {
                     'field'=>'latitude',
                     'label'=>'自身位置的纬度',
                     'rules'=>'required'
+                ),
+                array(
+                    'field'=>'vc',
+                    'label'=>'验证码',
+                    'rules'=>'required'
                 )
         );
         $this->form_validation->set_rules($config);
@@ -108,6 +123,10 @@ class Operation extends CI_CONTROLLER {
         if($playerId == NULL) {
         	echo -1;
         	return;
+        }
+        if( ! $this->maccount->vc_validation($this->input->post('vc'))){
+            echo -5;
+            return;
         }
         $targetId = $this->input->post('targetId');
         $user['longitude'] = $this->input->post('longitude');
@@ -164,12 +183,21 @@ class Operation extends CI_CONTROLLER {
                     'field'=>'latitude',
                     'label'=>'自身位置的纬度',
                     'rules'=>'required'
+                ),
+                array(
+                    'field'=>'vc',
+                    'label'=>'验证码',
+                    'rules'=>'required'
                 )
         );
         $this->form_validation->set_rules($config);
         $playerId = $this->session->userdata('playerId');
         if($playerId == NULL) {
             echo -1;
+            return;
+        }
+        if( ! $this->maccount->vc_validation($this->input->post('vc'))){
+            echo -5;
             return;
         }
         $targetId = $this->input->post('targetId');
@@ -204,6 +232,11 @@ class Operation extends CI_CONTROLLER {
                     'field'=>'latitude',
                     'label'=>'自身位置的纬度',
                     'rules'=>'required'
+                ),
+                array(
+                    'field'=>'vc',
+                    'label'=>'验证码',
+                    'rules'=>'required'
                 )
         );
         $this->form_validation->set_rules($config);
@@ -211,6 +244,10 @@ class Operation extends CI_CONTROLLER {
         if($playerId == NULL) {
         	echo -1;
         	return;
+        }
+        if( ! $this->maccount->vc_validation($this->input->post('vc'))){
+            echo -5;
+            return;
         }
         $targetId = $this->input->post('targetId');
         $user['longitude'] = $this->input->post('longitude');
@@ -249,12 +286,21 @@ class Operation extends CI_CONTROLLER {
                     'field'=>'quantity',
                     'label'=>'雇佣数量',
                     'rules'=>'required'
+                ),
+                array(
+                    'field'=>'vc',
+                    'label'=>'验证码',
+                    'rules'=>'required'
                 )
         );
         $this->form_validation->set_rules($config);
         $playerId = $this->session->userdata('playerId');
         if($playerId == NULL) {
             echo -1;
+            return;
+        }
+        if( ! $this->maccount->vc_validation($this->input->post('vc'))){
+            echo -5;
             return;
         }
         $quantity = $this->input->post('quantity');
