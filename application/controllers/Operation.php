@@ -227,49 +227,16 @@ class Operation extends CI_CONTROLLER {
         if($this->distance->calculateDistance($user, $target) < self::vision) {
             $player = $this->mproperty->get_by_id($playerId);
             $workforce = $player->workforce;
-        	$type = $this->resourcebase->collect($targetId, $workforce);
-        	switch($type) {
-        		case 1:
-        			$player->wood += $workforce;
-                    echo 1;
-        			break;
-        		case 2:
-        			$player->stone += $workforce;
-                    echo 1;
-        			break;
-        		case 3:
-        			$player->stone += $workforce;
-        			$player->wood += $workforce;
-                    echo 1;
-        			break;
-        		case 4:
-        			$player->food += $workforce;
-                    echo 1;
-        			break;
-        		case 5:
-        			$player->wood += $workforce;
-        			$player->food += $workforce;
-                    echo 1;
-        			break;
-        		case 6:
-        			$player->stone += $workforce;
-        			$player->food += $workforce;
-                    echo 1;
-        			break;
-        		case 7:
-        			$player->stone += $workforce;
-        			$player->wood += $workforce;
-        			$player->food += $workforce;
-                    echo 1;
-        			break;
-        		case -1:
-        			echo -2;
-        			break;
-        		case 0:
-        			echo 0;
-        			break;
-        	}
-        	$this->mproperty->update_property($playerId, $player);
+        	$got = $this->resourcebase->collect($targetId, $workforce);
+            if($got->wood == 0 && $got->stone == 0 && $got->food == 0) {
+                echo -3;
+                return;
+            }
+            $player->wood += $got->wood;
+            $player->stone += $got->stone;
+            $player->food += $got->food;
+            $this->mproperty->update_property($playerId, $player);
+            echo 1;
         } else {
             echo -2;   
         }
