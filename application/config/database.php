@@ -64,8 +64,8 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'rds6g23xcwfbkl6rufk5w.mysql.rds.aliyuncs.com',
-	'username' => 'idealight',
+	'hostname' => '112.74.98.74',
+	'username' => 'root',
 	'password' => 'IdeaLight666',
 	'database' => 'realcraft',
 	'dbdriver' => 'mysqli',

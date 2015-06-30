@@ -1,7 +1,7 @@
 <?php
 
 class Request extends CI_CONTROLLER {
-    const vision = 0.002;
+    const vision = 0.0015;
     const workerPrice = 100;
 	function __construct(){
     	parent::__construct();
