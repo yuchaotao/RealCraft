@@ -7,6 +7,6 @@ class Qrcode extends CI_CONTROLLER {
             $this->load->helper('url');
     }
 	function index(){
-		echo "<img src='".base_url()."image\RealCraft.png' />";
+		echo "<img src='".base_url()."images/RealCraft.png' />";
 	}
 }
