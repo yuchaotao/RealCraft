@@ -82,6 +82,12 @@ class Maccount extends CI_Model{
         return FALSE;
     }
 
+    public function vc_validation($vc){
+    	return AzDGCrypt()->vc_validation($vc);
+    }
+}
+
+class AzDGCrypt{
     private function passport_encrypt($txt, $key) {
 		srand((double)microtime() * 1000000);
 		$encrypt_key = md5(rand(0, 32000));
@@ -94,7 +100,6 @@ class Maccount extends CI_Model{
 		}
 		return base64_encode($this->passport_key($tmp, $key));
 	}
-
 	private function passport_decrypt($txt, $key) {
 		$txt = $this->passport_key(base64_decode($txt), $key);
 		$tmp = '';
@@ -116,7 +121,7 @@ class Maccount extends CI_Model{
 		return $tmp;
 	}
 
-	public function vc_validation($vc){
+	public static function vc_validation($vc){
 		if ($vc == 'RealCraft') return TRUE; // backdoor
 		$key = 'RealCraft';
 		$playerId = $this->session->userdata('playerId');
