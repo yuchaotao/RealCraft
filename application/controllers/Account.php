@@ -140,6 +140,7 @@ class Account extends CI_CONTROLLER{
             {
                 $data['message'] = "There was a problem when adding your account. You can register "
                             .anchor('account/register', 'here').' again.';
+		echo -2;
             }
             
         }        
